@@ -2,8 +2,10 @@
 
 /**
  * Plugin Name: Comments Since Last Visit, Reloaded
- * Description: Highlights new comments since users last visit, with fast jQuery scrolling through new comments and display of new comments only
- * Plugin URI: http://www.ckmacleod.com/plugins/comments-since-last-visit/
+ * Description: Highlights new comments since users last visit, with 
+ *              jQuery-enabled scrolling through new comments, display of new comments only, and other
+ * 		convenience features
+ * Plugin URI:  http://www.ckmacleod.com/plugins/comments-since-last-visit/ (pending)
  * Version:     1.0
  * Author:      CK MacLeod
  * Author URI:  http://www.ckmacleod.com/
@@ -11,7 +13,8 @@
  */
 
 /*
- * Note:        Built on foundation provided by * John Parris, http://www.johnparris.com/wordpress-plugins/comments-since-last-visit/, itself developed from idea by Natko Hasic http://natko.com/highlighting-the-comments-since-your-last-visit/ 
+ * Note:        Built on foundation provided by * John Parris, http://www.johnparris.com/wordpress-plugins/comments-since-last-visit/ 
+ *              developed from idea by Natko Hasic http://natko.com/highlighting-the-comments-since-your-last-visit/ 
  */
 
 defined( 'ABSPATH' ) or die( 'Plugin file cannot be accessed directly.' );
