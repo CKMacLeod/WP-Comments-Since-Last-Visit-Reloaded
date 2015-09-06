@@ -195,16 +195,7 @@ class WP_CSLVR {
                     setcookie('pvfb', json_encode( $pvfb), time() + $cookie_lookback );
 
             } 
-
-            //shouldn't be necessary except may be for error catching:
-
-//              if ( ($pvfb[$id] != '') && ($new_session[$id] != '') )   {
-//                        $prev_visit[$id] = $current_time;
-//                    setcookie('prev_visit', json_encode( $prev_visit ), time() + $cookie_lookback );
-//                }
-//                    
-
-
+            
         }
 
     }
@@ -235,8 +226,6 @@ class WP_CSLVR {
             $comment_time = strtotime( get_comment_date( 'Y-m-d G:i:s' ) );
             
             if ( !empty($prev_visit[$id])  &&  !empty($new_session[$id]) ) {
-            
-            //basically: if PREV VIS
 
             //both prev-visit set AND new session unexpired - here and next:
             //set cookie cleaners
@@ -259,16 +248,12 @@ class WP_CSLVR {
 
             // Add new-comment class if the comment was posted since user's last visit
 
-            // if ( !empty($latest_visit[$id])) { 
-                
-           //works, now test if deny whole function if ( ($comment_time >= $latest_visit[$id]) && (!isset($_POST['mark-all-read'])) )  {
-            //prior version
             if  ($comment_time >= $latest_visit[$id])   {
 
                 $classes[] = 'new-comment';
                 
             }
-            //}
+
         }   
         
         return $classes;
@@ -327,7 +312,7 @@ class WP_CSLVR {
         }
         
         //COMMENT IN OR OUT FOR DEBUGGING INFO
-       $xoutput .= WP_CSLVR::debug_cslvr();
+//       $xoutput .= WP_CSLVR::debug_cslvr();
 
         return $xoutput;
         
