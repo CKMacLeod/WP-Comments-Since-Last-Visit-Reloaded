@@ -2,10 +2,8 @@
 
 /**
  * Plugin Name: Comments Since Last Visit, Reloaded
- * Description: Highlights new comments since users last visit, with 
- *              jQuery-enabled scrolling through new comments, display of new comments only, and other
- * 		convenience features
- * Plugin URI:  http://www.ckmacleod.com/plugins/comments-since-last-visit/ (pending)
+ * Description: Highlights new comments since users last visit, with fast jQuery scrolling through new comments and display of new comments only
+ * Plugin URI: http://www.ckmacleod.com/plugins/comments-since-last-visit/
  * Version:     1.0
  * Author:      CK MacLeod
  * Author URI:  http://www.ckmacleod.com/
@@ -13,8 +11,7 @@
  */
 
 /*
- * Note:        Built on foundation provided by * John Parris, http://www.johnparris.com/wordpress-plugins/comments-since-last-visit/ 
- *              developed from idea by Natko Hasic http://natko.com/highlighting-the-comments-since-your-last-visit/ 
+ * Note:        Built on foundation provided by * John Parris, http://www.johnparris.com/wordpress-plugins/comments-since-last-visit/, itself developed from idea by Natko Hasic http://natko.com/highlighting-the-comments-since-your-last-visit/ 
  */
 
 defined( 'ABSPATH' ) or die( 'Plugin file cannot be accessed directly.' );
@@ -283,10 +280,9 @@ class WP_CSLVR {
     /* 
      * Outputs the Comments Since Last Visit Reloaded heading
      * 
-     * place <?php if (class_exists('WP_CSLVR') ) { $cslvr = new WP_CSLVR(); echo $cslvr->cslvr_heading(); } ?> 
-     * in comments.php where desired - for instance: 
-     * after "comments-title" closing <h2> tag but before "comment-list" opening <ol>
-     *      
+     * Use functions at end (outside of class scope) to 
+     * place the heading as well as the Mark All Read Button 
+     * in comments.php
      */ 
     public function cslvr_heading() { 
         
@@ -533,3 +529,22 @@ class WP_CSLVR {
     }  
 
 } //class
+
+
+/* add <?php if (function_exists('clsvr_heading') ) { cslvr_heading(); } ?>
+ * in appearance/editor/[theme]/comments.php ********************************
+ * where clsvr main buttons are to appear (for instance, above "comment list")**
+ * **/
+function cslvr_heading() {
+    $cslvr = new WP_CSLVR(); 
+    echo $cslvr->cslvr_heading();
+}
+
+/* add <?php if (function_exists('mark_all_read_button') ) { mark_all_read_button(); } ?>
+ * in appearance/editor/[theme]/comments.php ********************************
+ * where clsvr main button are to appear (for instance, above "comment list")***
+ * **/
+function mark_all_read_button() {
+    $cslvr = new WP_CSLVR();
+    echo $cslvr->mark_all_read_button();
+}
