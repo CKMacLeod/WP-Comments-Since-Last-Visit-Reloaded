@@ -19,7 +19,9 @@ This plug-in is under testing: Major features for now are complete, but there is
 
 *Prepare for internationalization
 
-*Provide separate installation instructions, screenshots, and styling tips
+*Provide separate installation instructions - of which most crucial will include proper identification of "comment body" or "article" in given theme, and related adjustments of jquery scripts and CSS
+
+*Provide screenshots, and styling tips in addition to the above
 
 *Refine and re-factor upon establishment of desired main functionality  
 
