@@ -14,7 +14,8 @@ function cslvr_only() {
     //main toggle hiding all elements named except for #cslvr-comments-heading and sort button
     //which goes from display: none to visible
     
-     var num_new_comments = jQuery('.new-comment').size();
+    //number new comments should be separate function (repeated below)
+    var num_new_comments = jQuery('.new-comment').size();
      
     
     if (num_new_comments === 1) {
@@ -30,11 +31,16 @@ function cslvr_only() {
     var ellipsis = '...';
     var gotten = ' gotten';
         
-    jQuery('#show-only-messages').prepend(getting,num_new_comments,commenttext).fadeOut('1000', function() {
+    jQuery('#show-only-messages').prepend(getting,num_new_comments,commenttext).fadeIn(2000, function() {
+        
         jQuery('#show-only-messages').text(function() {
+            
             return num_new_comments + commenttext + gotten;
-        }).delay('500').addClass('comments-gotten').fadeIn('slow');
+        
+        }).delay(500).addClass('comments-gotten').fadeOut(2000);
+    
     });
+    
     jQuery('.comment,#respond,.new-comment,#go-to-next-top-button,#cslvr-sort-button,#cslvr-comments-heading').toggle('slow');
     
     
@@ -50,7 +56,7 @@ function cslvr_only() {
         
         //may very possibly need to add formatting here to produce desired look
         //via jquery would look like: 
-        jQuery(newcomments).find('a.comment_reply_link,a.comment_quote_link').remove().end().appendTo('#cslvr-comments-heading').css({'height': 'auto', 'width': 'auto','margin': '2.5% 5%','padding' : '2.5%'}).addClass('appended');
+        jQuery(newcomments).find('a.comment_reply_link,a.comment_quote_link').remove().end().appendTo('#cslvr-comments-heading').css({'height': 'auto', 'width': 'auto','margin': '5%','padding' : '5%'}).addClass('appended');
         
         //jQuery(newcomments).appendTo('#cslvr-comments-heading').addClass('appended');
         
@@ -215,6 +221,8 @@ function cslvr_next() {
 
 function cslvr_sort() {
 
+    if (jQuery('#cslvr-sort-button').text() === 'Sort Oldest First') {
+        
         var sortcomments = jQuery('.appended').sort( function(a,b) { 
             if(a.id > b.id ) {
                 return 1;
@@ -224,6 +232,25 @@ function cslvr_sort() {
                 return 0;
             }
         }).clone();
+        
+        var sorttext = 'Sort Newest First';           
+        
+    } else {
+        
+        var sortcomments = jQuery('.appended').sort( function(a,b) { 
+            if(a.id < b.id ) {
+                return 1;
+            } else if(a.id > b.id ) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }).clone();
+        
+        var sorttext = 'Sort Oldest First';
+
+        
+    }
         
         jQuery('.appended').detach();
         
@@ -240,5 +267,9 @@ function cslvr_sort() {
             window.open(url);
                         
         });	
-                
+        
+       jQuery('#cslvr-sort-button').text(sorttext); 
+       jQuery('#cslvr-sorted-messages').html('&nbsp;<b>sorted</b>').fadeIn(1000).fadeOut(1000);
+       
+      
     ;}
