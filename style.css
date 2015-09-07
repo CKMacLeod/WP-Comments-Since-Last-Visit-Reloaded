@@ -2,8 +2,9 @@
 Styles for Comments Since Last Visit
 */
 /* 
-    Created on : Aug 29, 2015, 8:40:34 AM
-    Author     : CK MacLeod
+    Created on 	: Aug 29, 2015, 8:40:34 AM
+	Updated		: September 7, 2015
+    Author     	: CK MacLeod
 */
 
 
@@ -78,25 +79,31 @@ Styles for Comments Since Last Visit
     float: right;    
 } 
     
-#go-to-next-top-button, #show-hide-cslvr-button {
+#go-to-next-top-button, #show-hide-cslvr-button, #cslvr-sort-button,#cslvr-mark-all-read-button {
     max-width: 48%;
+    height: 50px;
+    display: block;
+}
 
+#cslvr-top-messages {
+    clear: both;
 }
 
 #show-only-messages { 
-    max-width: 48%;
+
+    max-width: 40%;
     float:right;
     font-style: italic;
     font-size: 80%;
     margin-bottom: 1em;
 }
 
-#go-to-next-messages {
-    max-width: 48%;
+#go-to-next-messages,#cslvr-sorted-messages {
+
+    max-width: 40%;
     font-style: italic;
     font-size: 80%;
     float: left;
-    clear: both;
     margin-bottom: 1em;
 }
 
