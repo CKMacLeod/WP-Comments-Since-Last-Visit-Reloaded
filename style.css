@@ -2,9 +2,11 @@
 Styles for Comments Since Last Visit
 */
 /* 
-    Created on : Sept 5, 2015
+    Created on : Aug 29, 2015, 8:40:34 AM
     Author     : CK MacLeod
 */
+
+
 
 .new-comment > .comment-body {
     border-right: 2px solid #117bb8;
@@ -78,7 +80,30 @@ Styles for Comments Since Last Visit
     
 #go-to-next-top-button, #show-hide-cslvr-button {
     max-width: 48%;
-    margin-bottom: 24px;
+
+}
+
+#show-only-messages { 
+    max-width: 48%;
+    float:right;
+    font-style: italic;
+    font-size: 80%;
+    margin-bottom: 1em;
+}
+
+#go-to-next-messages {
+    max-width: 48%;
+    font-style: italic;
+    font-size: 80%;
+    float: left;
+    clear: both;
+    margin-bottom: 1em;
+}
+
+#cslvr-buttons {
+    width: 100%;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
 }
 
 #cslvr-comments-heading {
@@ -94,6 +119,10 @@ Styles for Comments Since Last Visit
     margin: 24px 0;
 }
 
+
+#cslvr-buttons.no-new-comments, #cslvr-mark-all-read.no-new-comments {
+    display:none;
+}
 /*
 /*
 Styles for Comments Since Last Visit: OT DEVELOPMENT BLOG
