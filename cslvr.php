@@ -152,7 +152,23 @@ class WP_CSLVR {
 
             $new_session = json_decode( stripslashes( $_COOKIE['new_session'] ), true );
 
-
+            //prevent browser cookies from getting too large (sheds "min" value of array
+            //would likely occur at all only for users who visited 50 different posts within expiration period
+            if ( count( $pvfb ) >= 50 ) {
+                
+                $pvfb = array_diff( $pvfb, min( $pvfb ) );                
+             
+                setcookie('pvfb', json_encode( $pvfb ), time()+3600*2160 );
+            }
+            
+            if ( count( $prev_visit ) >= 50 ) {
+                
+                $prev_visit = array_diff( $prev_visit, min( $pvfb ) );                
+             
+                setcookie('prev_visit', json_encode( $prev_visit ), time()+3600*2160 );
+            }
+            
+            
 
             //if fallback variable not set, then this is our first time at the thread
             //set all three values at currenttime, with session variable to expire in session time;
@@ -185,7 +201,6 @@ class WP_CSLVR {
                     $prev_visit[$id] = $pvfb[$id];
 
                     setcookie('prev_visit', json_encode( $prev_visit ), time() + $cookie_lookback );
-
 
                     $pvfb[$id] = $current_time;
 
@@ -292,20 +307,25 @@ class WP_CSLVR {
 
                             $xoutput .=  '<button type="button" id="go-to-next-top-button" onclick="cslvr_next()" class="button" title="Scroll Through New Comments" alt="Go to Next Clicker" />Go to New Comments &#x21C5;</button>';
 
-                            $xoutput .= '<button type="button" id="cslvr-sort-button" onclick="cslvr_sort()" class="button" title="Sort Chronologically" alt"Sort Chronologically" />Sort by Date/Time</button>';
+                            $xoutput .= '<button type="button" id="cslvr-sort-button" onclick="cslvr_sort()" class="button" title="Sort Chronologically" alt"Sort Chronologically" />Sort Oldest First</button>';
+                            
+                            $xoutput .= '<div id="cslvr-top-messages">';
                             
                             $xoutput .= '<div id="go-to-next-messages"></div>';
+                            
+                            $xoutput .= '<div id="cslvr-sorted-messages"></div>';
                            
                             $xoutput .= '<div id="show-only-messages"></div>';
 
                             $xoutput .= '</div>';
-				
-			    //"comment-list" class a feature of 2015 and other standards-compliant themes
-                            $xoutput .=  '<div id="cslvr-comments-heading" class="comment-list">';	
 
-                            $xoutput .=  '<h2>Since ' . date( 'M j, Y @ G:i', $prev_visit_here) . ':</h2>';
+                            $xoutput .= '<div id="cslvr-comments-heading" class="comment-list" />';	
 
-                            $xoutput .=  '</div>';   
+                            $xoutput .= '<h2>Since ' . date( 'M j, Y @ G:i', $prev_visit_here) . ':</h2>';
+
+                            $xoutput .= '</div>';   
+                            
+                            $xoutput .= '</div>';
                         
                         } else {
                         
