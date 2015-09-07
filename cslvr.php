@@ -526,7 +526,7 @@ class WP_CSLVR {
 } //class
 
 
-/* add <?php if (function_exists('clsvr_heading') ) { cslvr_heading(); } ?>
+/* add <?php if (function_exists('cslvr_heading') ) { cslvr_heading(); } ?>
  * in appearance/editor/[theme]/comments.php ********************************
  * where clsvr main buttons are to appear (for instance, above "comment list")**
  * **/
