@@ -195,11 +195,10 @@ class WP_CSLVR {
                     setcookie('pvfb', json_encode( $pvfb), time() + $cookie_lookback );
 
             } 
-            
+
         }
 
     }
-
 
 
     /**
@@ -226,6 +225,8 @@ class WP_CSLVR {
             $comment_time = strtotime( get_comment_date( 'Y-m-d G:i:s' ) );
             
             if ( !empty($prev_visit[$id])  &&  !empty($new_session[$id]) ) {
+            
+            //basically: if PREV VIS
 
             //both prev-visit set AND new session unexpired - here and next:
             //set cookie cleaners
@@ -248,12 +249,16 @@ class WP_CSLVR {
 
             // Add new-comment class if the comment was posted since user's last visit
 
+            // if ( !empty($latest_visit[$id])) { 
+                
+           //works, now test if deny whole function if ( ($comment_time >= $latest_visit[$id]) && (!isset($_POST['mark-all-read'])) )  {
+            //prior version
             if  ($comment_time >= $latest_visit[$id])   {
 
                 $classes[] = 'new-comment';
                 
             }
-
+            //}
         }   
         
         return $classes;
@@ -264,63 +269,79 @@ class WP_CSLVR {
     
     /* 
      * Outputs the Comments Since Last Visit Reloaded heading
-     * 
-     * Use functions at end (outside of class scope) to 
-     * place the heading as well as the Mark All Read Button 
-     * in comments.php
+     *      
      */ 
     public function cslvr_heading() { 
         
-        if ( in_the_loop() && !isset($_POST['mark-all-read']) ) {
+        if ( in_the_loop() ) {
       
-        if (isset($_COOKIE['prev_visit']) )  {
+                if (isset($_COOKIE['prev_visit']) )  {
             
-            $id = get_the_ID();
-            
-            $prev_visit = json_decode( stripslashes( $_COOKIE['prev_visit']), true );
-            
-            $prev_visit_here = $prev_visit[$id];
-        
-            if (!empty($prev_visit_here)) {
-                $xoutput =  '<div id="cslvr-buttons" />';
-                $xoutput .=  '<button type="button" id="show-hide-cslvr-button" onclick="cslvr_only()" class="button" title="Show/Hide New Since Last Visit Comments" />Show New Comments Only</button>';
-                
-                $xoutput .=  '<button type="button" id="go-to-next-top-button" onclick="cslvr_next()" class="button" title="Scroll Through New Comments" alt="Go to Next Clicker" />Go to New Comments &#x21C5;</button>';
-                
-                $xoutput .= '<button type="button" id="cslvr-sort-button" onclick="cslvr_sort()" class="button" title="Sort Chronologically" alt"Sort Chronologically" />Sort by Date/Time</button>';
-                
-                $xoutput .= '</div>';
-                
-                $xoutput .=  '<div id="cslvr-comments-heading">';	
-                
-                $xoutput .=  '<h2>Comments new since ' . date( 'M j, Y @ G:i', $prev_visit_here) . '</h2>';
-                
-                $xoutput .=  '</div>';         
+                    $id = get_the_ID();
 
-        } else {
-                
-                //check for functionality not sure am getting it
-                //not sure if I need following
-                //if (empty($prev_visit_here)) {
-                $xoutput =  '<div id="cslvr-first-visit">';	
+                    $prev_visit = json_decode( stripslashes( $_COOKIE['prev_visit']), true );
 
-                $xoutput .=   'Session started ' . time(); 
+                    $prev_visit_here = $prev_visit[$id];
 
-                $xoutput .=  '</div>';
+                    if ( !isset($_POST['mark-all-read']) ) { 
+                        
+                        if (!empty($prev_visit_here)) {
+                        
+                            $xoutput =  '<div id="cslvr-buttons" />';
+                            $xoutput .=  '<button type="button" id="show-hide-cslvr-button" onclick="cslvr_only()" class="button" title="Show/Hide New Since Last Visit Comments" />Show New Comments Only</button>';
+
+                            $xoutput .=  '<button type="button" id="go-to-next-top-button" onclick="cslvr_next()" class="button" title="Scroll Through New Comments" alt="Go to Next Clicker" />Go to New Comments &#x21C5;</button>';
+
+                            $xoutput .= '<button type="button" id="cslvr-sort-button" onclick="cslvr_sort()" class="button" title="Sort Chronologically" alt"Sort Chronologically" />Sort by Date/Time</button>';
+                            
+                            $xoutput .= '<div id="go-to-next-messages"></div>';
                            
-            }
-        }
+                            $xoutput .= '<div id="show-only-messages"></div>';
+
+                            $xoutput .= '</div>';
+
+                            $xoutput .=  '<div id="cslvr-comments-heading">';	
+
+                            $xoutput .=  '<h2>Since ' . date( 'M j, Y @ G:i', $prev_visit_here) . ':</h2>';
+
+                            $xoutput .=  '</div>';   
+                        
+                        } else {
+                        
+                            $xoutput =  '<div id="cslvr-first-visit">';	
+
+                            $xoutput .=  '<h2>Session re-started.</h2>'; 
+
+                            $xoutput .=  '</div>';
+                        }
+
+                    } else {
+                
+                        //check for functionality not sure am getting it
+                        //not sure if I need following
+                        //if (empty($prev_visit_here)) {
+                        $xoutput =  '<div id="cslvr-first-visit">';	
+
+                        $xoutput .=  '<h2>Session re-started.</h2>'; 
+
+                        $xoutput .=  '</div>';
+                           
+                    }
+            }         
         
         //COMMENT IN OR OUT FOR DEBUGGING INFO
-//       $xoutput .= WP_CSLVR::debug_cslvr();
+ //      $xoutput .= WP_CSLVR::debug_cslvr();
 
         return $xoutput;
         
-    }
+        }
     
     }
-
     
+    /* 
+     * Outputs the Mark All Read Button
+     *      
+     */ 
     public function mark_all_read_button() {
         
         if (!isset($_POST['mark-all-read'])) {
@@ -374,7 +395,7 @@ class WP_CSLVR {
   
     public function debug_cslvr() {
       
-//  comment in to keep debugging for admins only
+//  comment in/out for admin only debugging (also see below)
     //  if ( current_user_can('update_plugins')) {
 
             $id = get_the_ID();
@@ -395,8 +416,6 @@ class WP_CSLVR {
 
             if (isset($_COOKIE['prev_visit'])) { $output .= '/ PREV VISIT SET';}
             if (empty($prev_visit[$id])) { $output .= '/ PREV VISIT EMPTY';}
-            if ($prev_visit[$id] == '') { $output .= '/ PREV VISIT == ';}
-            if ($prev_visit[$id] == 0) { $output .= '/ PREV VISIT == 0';}   
 
             $output .= '<hr />';
 
@@ -404,44 +423,35 @@ class WP_CSLVR {
 
             if (isset($_COOKIE['new_session'])) { $output .= '/ NEW SESS SET';}
             if (empty($new_session[$id])) { $output .= '/ NEW SESSID EMPTY';}
-            if ($new_session[$id] == '') { $output .= '/ NEW SESSID == ';}
-            if ($new_session[$id] == 0) { $output .= '/ NEW SESSID == 0';}
 
             $output .= '<hr />';
 
             $output .= '<p>PVFB[ID]: ' .  date( 'M j, Y @ G:i', $pvfb_here) . ' ('. $pvfb_here . ')</p>';
              if (isset($_COOKIE['pvfb'])) { $output .= '/ PVFB SET';}
             if (empty($pvfb[$id])) { $output .= '/ PVFB EMPTY';}
-            if ($pvfb[$id] == '') { $output .= '/ PVFB == ';}
-            if ($pvfb[$id] == 0) { $output .= '/ PVFB == 0';}   
             
-           $output .= '<p>DEBUG LATEST VISIT</p>';
+           $output .= '<hr/><p>DEBUG LATEST VISIT</p>';
             
-
             //both prev-visit set AND new session unexpired
             if ( isset( $_COOKIE['prev_visit'] ) && isset($_COOKIE['new_session'])) {
-                    $latest_visit = json_decode( stripslashes( $_COOKIE['prev_visit']), true );
-             $output .= '<p>PREV VISIT SET, NEW SESSION SET / ';
-             $output .= 'LV ID: ' . $latest_visit[$id]. '</p>';
-                
-                    //attempt to circumvent bad results on certain threads in which lvfb is null for prev-vist
+
+                $latest_visit = json_decode( stripslashes( $_COOKIE['prev_visit']), true );
+                $output .= '<p>PREV VISIT SET, NEW SESSION SET / ';
+
             }
 
             //pvfb exists but session has expired
             if ( isset ( $COOKIE['pvfb'] ) && !isset($_COOKIE['new_session']) ) {
                     $latest_visit = json_decode( stripslashes( $_COOKIE['pvfb']), true );
              $output .= '<p>PVFB SET, NEW SESSION UNSET / ';
+            }
+            
              $output .= 'LV ID: ' . $latest_visit[$id] . '</p>';       
                     
-            }
-
-            
-            
-            $output .= '<p>LV ID: ' . $latest_visit[$id]. '</p>';
-
-    //      }
-
         return $output;
+        
+// comment in/out for admin-only debugging
+//      }        
     }
     
     /**
