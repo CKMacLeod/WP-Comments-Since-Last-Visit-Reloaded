@@ -11,12 +11,12 @@ The user also has the option to re-start the session and thus "mark all comments
 
 ## Still to do
 
-This plug-in is under testing: Major features for now are complete, but there is still much to do while user experiences are assessed.  
+This plug-in is under testing: Major features for now are complete, but there is still much to do prior to publication in WordPress repository:
 
-*Provide a WordPress admin interface for adjusting options and conveniently adjust styles.
-*Provide separate installation instructions, screenshots, and styling tips.
-*Add "working," "success," and error-handling messages particularly where jQuery processes are likely to lag (on mobile interfaces and where dealing with very long comment threads).
-*Refine and re-factor code where appropriate. 
+*Provide a WordPress admin interface for adjusting options and conveniently adjusting styles
+*Prepare for internationalization
+*Provide separate installation instructions, screenshots, and styling tips
+*Refine and re-factor upon establishment of desired main functionality  
 
 
 
