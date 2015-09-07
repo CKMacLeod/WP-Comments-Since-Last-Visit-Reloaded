@@ -299,8 +299,9 @@ class WP_CSLVR {
                             $xoutput .= '<div id="show-only-messages"></div>';
 
                             $xoutput .= '</div>';
-
-                            $xoutput .=  '<div id="cslvr-comments-heading">';	
+				
+			    //"comment-list" class a feature of 2015 and other standards-compliant themes
+                            $xoutput .=  '<div id="cslvr-comments-heading" class="comment-list">';	
 
                             $xoutput .=  '<h2>Since ' . date( 'M j, Y @ G:i', $prev_visit_here) . ':</h2>';
 
