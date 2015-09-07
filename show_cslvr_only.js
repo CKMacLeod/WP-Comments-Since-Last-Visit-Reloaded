@@ -10,11 +10,35 @@
 //toggle the comment thread, and append a list in its place of new comments only
 
 function cslvr_only() {
-    
+        
     //main toggle hiding all elements named except for #cslvr-comments-heading and sort button
     //which goes from display: none to visible
     
-    jQuery('.comment,#respond,.new-comment,#go-to-next-top-button,#cslvr-sort-button,#cslvr-comments-heading').toggle('fast');
+     var num_new_comments = jQuery('.new-comment').size();
+     
+    
+    if (num_new_comments === 1) {
+        
+        var commenttext = ' comment';
+        
+    } else {
+        
+        var commenttext = ' comments';
+    }
+    
+    var getting = '...getting ';
+    var ellipsis = '...';
+    var gotten = ' gotten';
+        
+    jQuery('#show-only-messages').prepend(getting,num_new_comments,commenttext).fadeOut('1000', function() {
+        jQuery('#show-only-messages').text(function() {
+            return num_new_comments + commenttext + gotten;
+        }).delay('500').addClass('comments-gotten').fadeIn('slow');
+    });
+    jQuery('.comment,#respond,.new-comment,#go-to-next-top-button,#cslvr-sort-button,#cslvr-comments-heading').toggle('slow');
+    
+    
+    
     
     //adjust button text and action depending on toggle state flagged by text of primary button
             
@@ -50,16 +74,43 @@ function cslvr_only() {
         //since is "show all," if there are new comments appended, remove them
         
         jQuery('#show-hide-cslvr-button').text('Show New Comments Only');
+
         
         jQuery('.appended').remove();
         
+        jQuery('#show-only-messages').remove();
+        
     }
+} 
 
-}
+
+
 
 //enables looping "go to next clicker"
     
 jQuery(document).ready(function() {
+    
+    var num_new_comments = jQuery('.new-comment').size();
+    
+    if (num_new_comments === 0) {
+        
+    jQuery('#cslvr-buttons,#cslvr-mark-all-read').addClass('no-new-comments');
+    
+    } else {
+        
+    if (num_new_comments === 1) {
+        
+        var new_commenttext = ' new comment';
+        
+        } else {
+        
+        var new_commenttext = ' new comments';
+        
+        }
+        
+    jQuery('#go-to-next-messages').text(function() {
+            return num_new_comments + new_commenttext;
+        }).delay('500').addClass('new-comment-text').fadeIn('slow');   
 
     jQuery('.gtn_clicker').click(function() {
    
@@ -122,8 +173,10 @@ jQuery(document).ready(function() {
         }
 
     });
+    }
+    
+});   
 
-});
 
 
 //enables top "go to new comments button"
