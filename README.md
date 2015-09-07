@@ -13,6 +13,8 @@ The user also has the option to re-start the session and thus "mark all comments
 
 This plug-in is under testing: Major features for now are complete, but there is still much to do prior to publication in WordPress repository:
 
+*Add logic for automatically deleting old cookies if browser array gets too large
+
 *Provide a WordPress admin interface for adjusting options and conveniently adjusting styles
 
 *Prepare for internationalization
