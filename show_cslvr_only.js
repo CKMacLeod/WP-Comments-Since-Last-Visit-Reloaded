@@ -117,7 +117,7 @@ jQuery(document).ready(function() {
         
     jQuery('#go-to-next-messages').text(function() {
             return num_new_comments + new_commenttext;
-        }).delay('500').addClass('new-comment-text').fadeIn('slow');   
+        }).delay(500).addClass('new-comment-text').fadeIn('slow');   
 
     jQuery('.gtn_clicker').click(function() {
    
