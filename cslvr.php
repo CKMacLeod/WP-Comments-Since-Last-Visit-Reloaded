@@ -2,12 +2,14 @@
 
 /**
  * Plugin Name: Comments Since Last Visit, Reloaded
- * Description: Highlights new comments since users last visit, with fast jQuery scrolling through new comments and display of new comments only
+ * Description: Highlights new comments since user's last visit, with jQuery scrolling and sorting options, especially useful for busy sites with nested comments and rich conversations
  * Plugin URI: http://www.ckmacleod.com/plugins/comments-since-last-visit/
  * Version:     1.0
  * Author:      CK MacLeod
  * Author URI:  http://www.ckmacleod.com/
  * License:     GPL 2.0
+ * Date:        September 7, 2015
+ * 
  */
 
 /*
@@ -115,28 +117,21 @@ class WP_CSLVR {
 
     /**
      * 
-     * re-written for persistent highlighting
-     * sets a session cookie (like a session ID) for 15 minutes [to be made adjustable]
-     * during which "legacy" highlighting will remain persistent
+     * @ sets a session cookie (like a session ID) for set span (15 minute default)
+     * @ during which "legacy" highlighting will remain persistent
+     * @ unique to each post
      * 
      */
     public function cookie() {
-
-
-        /*TESTING VERSION ADDING PRECISE CURRENT TIME/THREAD: 
-         * FIRST DRAFT PRODUCES "PURE NEW SINCE LAST VISIT" DOES NOT "PERSIST"
-         */
-
 
         // We only want this on singular views
         if ( is_singular() ) {
 
             //key variables defaulted at 600 seconds or 15 minutes for session span,
             //90 days for last visit cookies to automatically expire
-
             $session_span = 900;
+            
             $cookie_lookback = 3600*2160;
-
 
             // Get current post ID //check for use of ID
             $id = get_the_ID();
@@ -159,7 +154,8 @@ class WP_CSLVR {
                 $pvfb = array_diff( $pvfb, min( $pvfb ) );                
              
                 setcookie('pvfb', json_encode( $pvfb ), time()+3600*2160 );
-            }
+
+                }
             
             if ( count( $prev_visit ) >= 50 ) {
                 
@@ -167,12 +163,9 @@ class WP_CSLVR {
              
                 setcookie('prev_visit', json_encode( $prev_visit ), time()+3600*2160 );
             }
-            
-            
-
+                        
             //if fallback variable not set, then this is our first time at the thread
             //set all three values at currenttime, with session variable to expire in session time;
-
             if (!isset($_COOKIE['pvfb'])) {
 
                 $pvfb[$id] = $current_time;
@@ -188,8 +181,8 @@ class WP_CSLVR {
                 if (isset($_COOKIE['new_session'])) {
 
                     $pvfb[$id] = $current_time;
-                    setcookie('pvfb', json_encode( $pvfb), time() + $cookie_lookback );
 
+                    setcookie('pvfb', json_encode( $pvfb), time() + $cookie_lookback );
 
                 }
             }
@@ -207,6 +200,7 @@ class WP_CSLVR {
                     $new_session[$id] = $current_time;
 
                     setcookie('new_session',json_encode( $new_session ), time() + $session_span );
+
                     setcookie('pvfb', json_encode( $pvfb), time() + $cookie_lookback );
 
             } 
@@ -218,11 +212,11 @@ class WP_CSLVR {
 
     /**
      * Modify comment_class on comments made since last visit
-     *
-     * @since 1.0
+     * 
      * @uses comment_class filter
+     * @replaces previous visit variable fallback variable set at last visit
      * @return $classes variable. CSS classes for single comment.
-     * got weird "join" error on "new" format for uncommented threads:  so replaced with old logic - have to watch for it
+     * 
      */
     public function comment_class( $classes ) {
         
@@ -241,17 +235,11 @@ class WP_CSLVR {
             
             if ( !empty($prev_visit[$id])  &&  !empty($new_session[$id]) ) {
             
-            //basically: if PREV VIS
-
-            //both prev-visit set AND new session unexpired - here and next:
-            //set cookie cleaners
-            //if ( isset( $_COOKIE['prev_visit'] ) && isset( $_COOKIE['new_session'] ) ) {
-                    $latest_visit = json_decode( stripslashes( $_COOKIE['prev_visit']), true );
-                    //attempt to circumvent bad results on certain threads in which lvfb is null for prev-vist
+                $latest_visit = json_decode( stripslashes( $_COOKIE['prev_visit']), true );
+            
             }
 
             //pvfb exists but session has expired
-            //if ( isset ( $COOKIE['pvfb'] ) && !isset( $_COOKIE['new_session'] ) ) {
             if ( !empty($pvfb[$id])  &&  empty($new_session[$id]) ) {
                     $latest_visit = json_decode( stripslashes( $_COOKIE['pvfb']), true );
             }
@@ -264,27 +252,22 @@ class WP_CSLVR {
 
             // Add new-comment class if the comment was posted since user's last visit
 
-            // if ( !empty($latest_visit[$id])) { 
-                
-           //works, now test if deny whole function if ( ($comment_time >= $latest_visit[$id]) && (!isset($_POST['mark-all-read'])) )  {
-            //prior version
             if  ($comment_time >= $latest_visit[$id])   {
 
                 $classes[] = 'new-comment';
                 
             }
-            //}
+
         }   
         
         return $classes;
         
     }
-                
 
     
     /* 
      * Outputs the Comments Since Last Visit Reloaded heading
-     *      
+     * Contains all buttons at top     
      */ 
     public function cslvr_heading() { 
         
@@ -318,14 +301,14 @@ class WP_CSLVR {
                             $xoutput .= '<div id="show-only-messages"></div>';
 
                             $xoutput .= '</div>';
+                            
+                            $xoutput .= '</div>';
 
                             $xoutput .= '<div id="cslvr-comments-heading" class="comment-list" />';	
 
                             $xoutput .= '<h2>Since ' . date( 'M j, Y @ G:i', $prev_visit_here) . ':</h2>';
 
                             $xoutput .= '</div>';   
-                            
-                            $xoutput .= '</div>';
                         
                         } else {
                         
@@ -392,6 +375,10 @@ class WP_CSLVR {
         }
     }
     
+    /*
+     * Re-sets all session cookies if Mark-All-Read/Session-ReSet Posted
+     */
+    
     public function update_cslv_session() {
         
         if ( isset($_POST['mark-all-read'])) {
@@ -413,7 +400,11 @@ class WP_CSLVR {
         }
     }
 
-  
+    /*
+     * Enables easy debugging of cookie times as used
+     * Probably not include in version for distribution
+     * 
+     */
     public function debug_cslvr() {
       
 //  comment in/out for admin only debugging (also see below)
@@ -516,8 +507,7 @@ class WP_CSLVR {
     }    
 
     /**
-     * enqueues the plugin stylesheet
-     * between them
+     * Enqueues the plugin stylesheet
      *
      */ 
     public function cslvr_stylesheet() {
@@ -547,8 +537,9 @@ class WP_CSLVR {
 } //class
 
 
-/* add <?php if (function_exists('cslvr_heading') ) { cslvr_heading(); } ?>
- * in appearance/editor/[theme]/comments.php ********************************
+/* 
+ * outside of Class for easy placement in appearance/editor/[theme]/comments.php 
+ * add <?php if (function_exists('cslvr_heading') ) { cslvr_heading(); } ?>
  * where clsvr main buttons are to appear (for instance, above "comment list")**
  * **/
 function cslvr_heading() {
@@ -558,7 +549,7 @@ function cslvr_heading() {
 
 /* add <?php if (function_exists('mark_all_read_button') ) { mark_all_read_button(); } ?>
  * in appearance/editor/[theme]/comments.php ********************************
- * where clsvr main button are to appear (for instance, above "comment list")***
+ * where Mark All Read button is to appear (for instance, after "comment list")***
  * **/
 function mark_all_read_button() {
     $cslvr = new WP_CSLVR();

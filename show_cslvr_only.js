@@ -3,6 +3,7 @@
  * 
  * Author:  CK MacLeod
  * Date:    September 3, 2015
+ * Updated: September 7, 2015
  * 
  */
 
@@ -218,6 +219,8 @@ function cslvr_next() {
 //chronologically sort new new comment list on button click
 //useful for nested comments - should be optional or not shown for 
 //sites without nested comments
+//maybe set according to admin options re nesting, since non-nested will default to 
+//oldest first
 
 function cslvr_sort() {
 

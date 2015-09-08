@@ -1,19 +1,41 @@
 /*
-Styles for Comments Since Last Visit
+Styles for Comments Since Last Visit, Reloaded
 */
 /* 
     Created on 	: Aug 29, 2015, 8:40:34 AM
-	Updated		: September 7, 2015
+    Updated	: September 7, 2015
     Author     	: CK MacLeod
 */
 
+/******************
+*****COMMENTS/TEXT*
+******************/
 
-
+/* comment out for use on OT dev blog ***
+******************************************/
 .new-comment > .comment-body {
-    border-right: 2px solid #117bb8;
-    -webkit-box-shadow: 10px 0px 5px -5px rgba(17,123,184,1);
-    -moz-box-shadow: 10px 0px 5px -5px rgba(17,123,184,1);
-    box-shadow: 10px 0px 5px -5px rgba(17,123,184,1);
+        border-right: 2px solid #117bb8;
+        -webkit-box-shadow: 10px 0px 5px -5px rgba(17,123,184,1);
+        -moz-box-shadow: 10px 0px 5px -5px rgba(17,123,184,1);
+        box-shadow: 10px 0px 5px -5px rgba(17,123,184,1);
+}
+
+.new-comment article {
+    position: relative;
+}
+
+#cslvr-comments-heading {
+    display: none;
+}
+
+.appended {
+    background-color: #fff;
+    border: 1px dotted black;
+    clear: both;
+    color: black;
+    margin: 12px;
+    padding: 12px;
+    width: 100%;
 }
 
 #cslvr-first-visit {
@@ -28,31 +50,19 @@ Styles for Comments Since Last Visit
     text-align: center;
 }
 
-.appended {
-    background-color: #fff;
-    border: 1px dotted black;
-    clear: both;
-    color: black;
-    margin: 12px;
-    padding: 12px;
-    width: 100%;
-}
-
-
+/******************
+*****CLICKER*******
+******************/
 .gtn_clicker {
     display: none;
 }
 
 .new-comment .gtn_clicker {
-    //background-color: #117bb8;
     bottom: -6px;
     display: block;
     padding: 4px;
     position: absolute;
     right: -25px;
-/*    -webkit-box-shadow: 2px 2px 2px 1px rgba(17,123,184,1);
-    -moz-box-shadow: 2px 2px 2px 1px rgba(17,123,184,1);
-    box-shadow: 2px 2px 2px 1px rgba(17,123,184,1);*/
 }
 
 .new-comment .gtn_clicker:hover {
@@ -63,10 +73,6 @@ Styles for Comments Since Last Visit
     box-shadow: 2px 2px 2px 1px #138bcf;
 }
 
-.new-comment article {
-    position: relative;
-}
-
 .new-comment .gtn_clicker a, #cslvr-comments-heading .gtn_clicker a {
     color: #fff;
 }
@@ -75,47 +81,24 @@ Styles for Comments Since Last Visit
    display: block;
 }
 
-#show-hide-cslvr-button {
-    float: right;    
-} 
-    
+/******************
+*****BUTTONS*******
+******************/
+#cslvr-buttons {
+    width: 100%;
+    margin: 1em 0;
+    padding-bottom: 1em;
+}
+
 #go-to-next-top-button, #show-hide-cslvr-button, #cslvr-sort-button,#cslvr-mark-all-read-button {
     max-width: 48%;
     height: 50px;
     display: block;
 }
 
-#cslvr-top-messages {
-    clear: both;
-}
-
-#show-only-messages { 
-
-    max-width: 40%;
-    float:right;
-    font-style: italic;
-    font-size: 80%;
-    margin-bottom: 1em;
-}
-
-#go-to-next-messages,#cslvr-sorted-messages {
-
-    max-width: 40%;
-    font-style: italic;
-    font-size: 80%;
-    float: left;
-    margin-bottom: 1em;
-}
-
-#cslvr-buttons {
-    width: 100%;
-    margin-bottom: 1em;
-    padding-bottom: 1em;
-}
-
-#cslvr-comments-heading {
-    display: none;
-}
+#show-hide-cslvr-button {
+    float: right;    
+} 
 
 #cslvr-sort-button {
     display: none;
@@ -126,122 +109,59 @@ Styles for Comments Since Last Visit
     margin: 24px 0;
 }
 
-
 #cslvr-buttons.no-new-comments, #cslvr-mark-all-read.no-new-comments {
     display:none;
 }
-/*
-/*
+
+/******************
+*****MESSAGES******
+******************/
+
+#cslvr-top-messages {
+    clear: both;
+}
+
+#show-only-messages { 
+    max-width: 40%;
+    float:right;
+    font-style: italic;
+    font-size: 80%;
+    margin-bottom: 1em;
+}
+
+#go-to-next-messages, #cslvr-sorted-messages {
+    max-width: 40%;
+    font-style: italic;
+    font-size: 80%;
+    float: left;
+    margin-bottom: 1em;
+}
+
+/********************************************************************
 Styles for Comments Since Last Visit: OT DEVELOPMENT BLOG
-*/
-/* 
-    Created on : Aug 29, 2015, 8:40:34 AM
-    Author     : CK MacLeod
-*/
+*******************************************************************
 
-
-
-/*.new-comment > article {
+.new-comment > article {
         border-right: 2px solid #117bb8;
         -webkit-box-shadow: 10px 0px 5px -5px rgba(17,123,184,1);
         -moz-box-shadow: 10px 0px 5px -5px rgba(17,123,184,1);
         box-shadow: 10px 0px 5px -5px rgba(17,123,184,1);
 }
+    
+#go-to-next-top-button, #show-hide-cslvr-button, #cslvr-sort-button {
+    	background-color: #117bb8;
+	line-height: 150%;
+	max-width: 48%;    
+}
 
-
+#go-to-next-top-button:hover, #show-hide-cslvr-button:hover, #cslvr-sort-button:hover {
+    background-color: #138bcf;   
+}
 
 #cslvr-comments-heading h2 {
 	font-size: 150%;
 	margin: 24px 0;
 	}
-
-
-#cslvr-first-visit {
-        background-color: Gray;
-        border-right: none;                    
-        color: #fff;
-        float: right;
-        font-size: 12px;
-        line-height: 12px;
-        margin-bottom: 24px;
-        padding: 6px;
-        text-align: center;
-}
-
-.appended {
-    background-color: #fff;
-    border: 1px dotted black;
-    clear: both;
-    color: black;
-    margin: 12px;
-    padding: 12px;
-    width: 100%;
-}
-
-
-.gtn_clicker {
-    display: none;
-}
-
-.new-comment .gtn_clicker {
-    display: block;
-    position: absolute;
-    bottom: -6px;
-    right: -25px;
-    background-color: #117bb8;
-    padding: 4px;
-    color: #fff;
-    -webkit-box-shadow: 2px 2px 2px 1px rgba(17,123,184,1);
-        -moz-box-shadow: 2px 2px 2px 1px rgba(17,123,184,1);
-        box-shadow: 2px 2px 2px 1px rgba(17,123,184,1);
-     
-}
-
-.new-comment article {
-    position: relative;
-}
-
-.new-comment .gtn_clicker a, #cslvr-comments-heading .gtn_clicker a {
-    color: #fff;
-}
-
-.new-comment .gtn_clicker a:hover, .new-comment .gtn_clicker:hover {
-    background-color: #138bcf;
-    -webkit-box-shadow: 2px 2px 2px 1px #138bcf;
-        -moz-box-shadow: 2px 2px 2px 1px #138bcf;
-        box-shadow: 2px 2px 2px 1px #138bcf;
-}
-
-#go-to-next-top .gtn_clicker {
-   display: block;
-      background-color: #117bb8;
-    padding: 4px;
-    color: #fff;
-    -webkit-box-shadow: 2px 2px 2px 1px rgba(17,123,184,1);
-        -moz-box-shadow: 2px 2px 2px 1px rgba(17,123,184,1);
-        box-shadow: 2px 2px 2px 1px rgba(17,123,184,1);
-    font-size: 100%;
-}
-
-#show-hide-cslvr-button {
-    float: right;
-} 
-    
-#go-to-next-top-button, #show-hide-cslvr-button {
-    	background-color: #117bb8;
-	line-height: 150%;
-	max-width: 48%;
-	margin: 24px 0;     
-}
-
-#go-to-next-top-button:hover, #show-hide-cslvr-button:hover {
-    background-color: #138bcf;   
-}
-
-
-#cslvr-comments-heading {
-    display: none;
-}
 
 #cslvr-comments-heading article {
 	border: 1px dotted #a3a3a3;
@@ -250,12 +170,6 @@ Styles for Comments Since Last Visit: OT DEVELOPMENT BLOG
 #cslvr-comments-heading .sce-edit-comment {
 	display: none;
 }
-
-
-#go-to-next-top, #cslvr-comments-heading {
-    max-width: 48%;
-}
-
 
 @media only screen and (max-width: 640px) {
 	.new-comment .gtn_clicker {
