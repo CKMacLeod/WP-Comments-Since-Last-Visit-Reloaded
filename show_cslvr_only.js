@@ -217,28 +217,10 @@ function cslvr_next() {
 }
 
 //chronologically sort new new comment list on button click
-//useful for nested comments - should be optional or not shown for 
-//sites without nested comments
-//maybe set according to admin options re nesting, since non-nested will default to 
-//oldest first
 
 function cslvr_sort() {
 
-    if (jQuery('#cslvr-sort-button').text() === 'Sort Oldest First') {
-        
-        var sortcomments = jQuery('.appended').sort( function(a,b) { 
-            if(a.id > b.id ) {
-                return 1;
-            } else if(a.id < b.id ) {
-                return -1;
-            } else {
-                return 0;
-            }
-        }).clone();
-        
-        var sorttext = 'Sort Newest First';           
-        
-    } else {
+    if (jQuery('#cslvr-sort-button').text() === 'Sort Newest First') {
         
         var sortcomments = jQuery('.appended').sort( function(a,b) { 
             if(a.id < b.id ) {
@@ -250,7 +232,21 @@ function cslvr_sort() {
             }
         }).clone();
         
-        var sorttext = 'Sort Oldest First';
+        var sorttext = 'Sort Oldest First';           
+        
+    } else {
+        
+        var sortcomments = jQuery('.appended').sort( function(a,b) { 
+            if(a.id > b.id ) {
+                return 1;
+            } else if(a.id < b.id ) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }).clone();
+        
+        var sorttext = 'Sort Newest First';
 
         
     }
