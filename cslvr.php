@@ -148,8 +148,8 @@ class WP_CSLVR {
             $new_session = json_decode( stripslashes( $_COOKIE['new_session'] ), true );
 
             //prevent browser cookies from getting too large (sheds "min" value of array
-            //would likely occur at all only for users who visited 50 different posts within expiration period
-            if ( count( $pvfb ) >= 50 ) {
+            //would likely occur at all only for users who visited 25 different posts within expiration period
+            if ( count( $pvfb ) >= 25 ) {
                 
                 $pvfb = array_diff( $pvfb, min( $pvfb ) );                
              
@@ -157,7 +157,7 @@ class WP_CSLVR {
 
                 }
             
-            if ( count( $prev_visit ) >= 50 ) {
+            if ( count( $prev_visit ) >= 25 ) {
                 
                 $prev_visit = array_diff( $prev_visit, min( $pvfb ) );                
              

@@ -3,7 +3,7 @@
  * 
  * Author:  CK MacLeod
  * Date:    September 3, 2015
- * Updated: September 7, 2015
+ * Updated: September 8, 2015
  * 
  */
 
@@ -29,12 +29,12 @@ function cslvr_only() {
     }
     
     var getting = '...getting ';
-    var ellipsis = '...';
     var gotten = ' gotten';
+    var showmsgs = jQuery('#show-only-messages');
         
-    jQuery('#show-only-messages').prepend(getting,num_new_comments,commenttext).fadeIn(2000, function() {
+    showmsgs.prepend(getting,num_new_comments,commenttext).fadeIn('fast', function() {
         
-        jQuery('#show-only-messages').text(function() {
+        showmsgs.text(function() {
             
             return num_new_comments + commenttext + gotten;
         
@@ -44,12 +44,11 @@ function cslvr_only() {
     
     jQuery('.comment,#respond,.new-comment,#go-to-next-top-button,#cslvr-sort-button,#cslvr-comments-heading').toggle('slow');
     
-    
-    
-    
     //adjust button text and action depending on toggle state flagged by text of primary button
+    
+    var togglebutton = jQuery('#show-hide-cslvr-button');
             
-    if (jQuery('#show-hide-cslvr-button').text() === 'Show New Comments Only') {
+    if (togglebutton.text() === 'Show New Comments Only') {
         
         //change text and clone and append new comments
         
@@ -57,11 +56,11 @@ function cslvr_only() {
         
         //may very possibly need to add formatting here to produce desired look
         //via jquery would look like: 
-        jQuery(newcomments).find('a.comment_reply_link,a.comment_quote_link').remove().end().appendTo('#cslvr-comments-heading').css({'height': 'auto', 'width': 'auto','margin': '5%','padding' : '5%'}).addClass('appended');
+        newcomments.find('a.comment_reply_link,a.comment_quote_link').remove().end().appendTo('#cslvr-comments-heading').css({'height': 'auto', 'width': 'auto','margin': '5%','padding' : '5%'}).addClass('appended');
         
         //jQuery(newcomments).appendTo('#cslvr-comments-heading').addClass('appended');
         
-        jQuery('#show-hide-cslvr-button').text('Show All Comments');
+        togglebutton.text('Show All Comments');
         
         //enable internal links in cloned comments, when clicked, to open page where target, 
         //hidden or not, appears in context 
@@ -80,12 +79,11 @@ function cslvr_only() {
         
         //since is "show all," if there are new comments appended, remove them
         
-        jQuery('#show-hide-cslvr-button').text('Show New Comments Only');
-
+        togglebutton.text('Show New Comments Only');
+        
+        showmsgs.remove();
         
         jQuery('.appended').remove();
-        
-        jQuery('#show-only-messages').remove();
         
     }
 } 
@@ -117,7 +115,7 @@ jQuery(document).ready(function() {
         
     jQuery('#go-to-next-messages').text(function() {
             return num_new_comments + new_commenttext;
-        }).delay(500).addClass('new-comment-text').fadeIn('slow');   
+        }).addClass('new-comment-text').fadeIn('slow');   
 
     jQuery('.gtn_clicker').click(function() {
    
@@ -247,7 +245,6 @@ function cslvr_sort() {
         }).clone();
         
         var sorttext = 'Sort Newest First';
-
         
     }
         
