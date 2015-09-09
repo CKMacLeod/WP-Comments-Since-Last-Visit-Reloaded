@@ -68,6 +68,7 @@ Styles for Comments Since Last Visit, Reloaded
 .new-comment .gtn_clicker:hover {
     background-color: #138bcf;
     color: #fff;
+    cursor: pointer;
     -webkit-box-shadow: 2px 2px 2px 1px #138bcf;
     -moz-box-shadow: 2px 2px 2px 1px #138bcf;
     box-shadow: 2px 2px 2px 1px #138bcf;
