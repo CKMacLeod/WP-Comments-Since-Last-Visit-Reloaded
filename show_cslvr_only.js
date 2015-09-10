@@ -3,7 +3,7 @@
  * 
  * Author:  CK MacLeod
  * Date:    September 3, 2015
- * Updated: September 8, 2015
+ * Updated: September 9, 2015
  * 
  */
 
@@ -47,6 +47,8 @@ function cslvr_only() {
     //adjust button text and action depending on toggle state flagged by text of primary button
     
     var togglebutton = jQuery('#show-hide-cslvr-button');
+    var togglebutton_b = jQuery('#show-hide-cslvr-button-bottom');
+
             
     if (togglebutton.text() === 'Show New Comments Only') {
         
@@ -61,10 +63,13 @@ function cslvr_only() {
         //jQuery(newcomments).appendTo('#cslvr-comments-heading').addClass('appended');
         
         togglebutton.text('Show All Comments');
+        togglebutton_b.text('Show All Comments');
         
+        var scrollback = jQuery('#comments').offset().top;
+        jQuery('html, body').animate({ scrollTop: scrollback }, "slow");
+ 
         //enable internal links in cloned comments, when clicked, to open page where target, 
         //hidden or not, appears in context 
-
         jQuery('.appended a').click(function(e) {
             
             e.preventDefault();
@@ -80,12 +85,14 @@ function cslvr_only() {
         //since is "show all," if there are new comments appended, remove them
         
         togglebutton.text('Show New Comments Only');
+        togglebutton_b.text('Show New Comments Only');
         
         showmsgs.remove();
         
         jQuery('.appended').remove();
         
     }
+    
 } 
 
 
@@ -99,7 +106,7 @@ jQuery(document).ready(function() {
     
     if (num_new_comments === 0) {
         
-    jQuery('#cslvr-buttons,#cslvr-mark-all-read').addClass('no-new-comments');
+    jQuery('#cslvr-buttons,#cslvr_bottom_buttons').addClass('no-new-comments');
     
     } else {
         

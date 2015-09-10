@@ -9,6 +9,7 @@
  * Author URI:  http://www.ckmacleod.com/
  * License:     GPL 2.0
  * Date:        September 7, 2015
+ * Updated:		September 9, 2015
  * 
  */
 
@@ -167,6 +168,10 @@ class WP_CSLVR {
             //if fallback variable not set, then this is our first time at the thread
             //set all three values at currenttime, with session variable to expire in session time;
             if (!isset($_COOKIE['pvfb'])) {
+                
+                $pvfb = array();
+                $new_session = array();
+                $prev_visit = array();
 
                 $pvfb[$id] = $current_time;
                 $new_session[$id] = $current_time;
@@ -220,7 +225,7 @@ class WP_CSLVR {
      */
     public function comment_class( $classes ) {
         
-        if ( !isset($_POST['mark-all-read']) ) {
+        if ( !isset($_GET['mark-all-read']) ) {
                 
             $pvfb = json_decode( stripslashes( $_COOKIE['pvfb'] ), true );
 
@@ -281,12 +286,12 @@ class WP_CSLVR {
 
                     $prev_visit_here = $prev_visit[$id];
 
-                    if ( !isset($_POST['mark-all-read']) ) { 
+                    if ( !isset($_GET['mark-all-read']) ) { 
                         
                         if (!empty($prev_visit_here)) {
                         
                             $xoutput =  '<div id="cslvr-buttons" />';
-                            $xoutput .=  '<button type="button" id="show-hide-cslvr-button" onclick="cslvr_only()" class="button" title="Show/Hide New Since Last Visit Comments" />Show New Comments Only</button>';
+                            $xoutput .=  '<button type="button" id="show-hide-cslvr-button" onclick="cslvr_only()" class="showhide-button button" title="Show/Hide New Since Last Visit Comments" />Show New Comments Only</button>';
 
                             $xoutput .=  '<button type="button" id="go-to-next-top-button" onclick="cslvr_next()" class="button" title="Scroll Through New Comments" alt="Go to Next Clicker" />Go to New Comments &#x21C5;</button>';
 
@@ -348,7 +353,29 @@ class WP_CSLVR {
      */ 
     public function mark_all_read_button() {
         
-        if (!isset($_POST['mark-all-read'])) {
+        $id = get_the_ID();
+        
+        $marb = '<div id="cslvr-mark-all-read">';
+
+        $marb .= '<form method="get" action="">';
+
+        $marb .= '<input id="cslvr-mark-all-read-button" class="button" type="submit" name="submit" value="Mark All Read" title="Remove New Formatting/Reset Session" />';
+
+        $marb .= '<input type="hidden" name="mark-all-read" value="' . $id . '" />';
+
+        $marb .= '</form>';
+
+        $marb .= '</div>';
+
+        return $marb;
+
+    }
+    
+    
+    
+    public function cslvr_bottom_buttons() {
+        
+        if (!isset($_GET['mark-all-read'])) {
             
             $id = get_the_ID();
             
@@ -357,22 +384,14 @@ class WP_CSLVR {
             $prev_visit_here = $prev_visit[$id];
         
             if (!empty($prev_visit_here)) {
-        
-                $marb = '<div id="cslvr-mark-all-read">';
-
-                $marb .= '<form method="post" action="">';
-
-                $marb .= '<input id="cslvr-mark-all-read-button" class="button" type="submit" name="submit" value="Mark All Read" title="Remove New Formatting/Reset Session" />';
-
-                $marb .= '<input type="hidden" name="mark-all-read" value="' . $id . '" />';
-
-                $marb .= '</form>';
-
-                $marb .= '</div>';
-
-                return $marb;
+                
+                $cbottom = '<div id="cslvr_bottom_buttons">';
+                $cbottom .= '<button type="button" id="show-hide-cslvr-button-bottom" class="showhide-button button" onclick="cslvr_only()"  title="Show/Hide New Since Last Visit Comments" />Show New Comments Only</button>';
+                $cbottom .= WP_CSLVR::mark_all_read_button();
+                $cbottom .= '</div>';
             }
         }
+        return $cbottom;
     }
     
     /*
@@ -381,21 +400,23 @@ class WP_CSLVR {
     
     public function update_cslv_session() {
         
-        if ( isset($_POST['mark-all-read'])) {
-            
-            $id = absint($_POST['mark-all-read']);
+        if ( isset($_GET['mark-all-read'])) {
+            //check whether works with get the id after all
+            $id = $_GET['mark-all-read'];
             $current_time = strtotime( current_time( 'mysql' ) );
             //possibly better set as globals or as admin options since used earlier or wait as sep function
             $session_span = 900;
             $cookie_lookback = 3600*2160;
             
              $pvfb[$id] = $current_time;
-             $new_session[$id] = $current_time;
-             $prev_visit[$id] = $current_time;
-
-             setcookie('new_session', json_encode( $new_session), time() + $session_span );
-             setcookie('prev_visit', json_encode( $prev_visit ), time() + $cookie_lookback );
              setcookie('pvfb', json_encode( $pvfb ), time() + $cookie_lookback );
+             
+             $new_session[$id] = $current_time;
+             setcookie('new_session', json_encode( $new_session), time() + $session_span );
+             
+             $prev_visit[$id] = $current_time;
+             setcookie('prev_visit', json_encode( $prev_visit ), time() + $cookie_lookback );
+             
             
         }
     }
@@ -547,11 +568,11 @@ function cslvr_heading() {
     echo $cslvr->cslvr_heading();
 }
 
-/* add <?php if (function_exists('mark_all_read_button') ) { mark_all_read_button(); } ?>
+/* add <?php if (function_exists('cslvr_bottom_buttons') ) { cslvr_bottom_buttons(); } ?>
  * in appearance/editor/[theme]/comments.php ********************************
  * where Mark All Read button is to appear (for instance, after "comment list")***
  * **/
-function mark_all_read_button() {
+function cslvr_bottom_buttons() {
     $cslvr = new WP_CSLVR();
-    echo $cslvr->mark_all_read_button();
+    echo $cslvr->cslvr_bottom_buttons();
 }

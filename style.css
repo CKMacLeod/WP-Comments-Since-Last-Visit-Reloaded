@@ -3,7 +3,7 @@ Styles for Comments Since Last Visit, Reloaded
 */
 /* 
     Created on 	: Aug 29, 2015, 8:40:34 AM
-    Updated	: September 7, 2015
+    Updated	: September 9, 2015
     Author     	: CK MacLeod
 */
 
@@ -68,6 +68,7 @@ Styles for Comments Since Last Visit, Reloaded
 .new-comment .gtn_clicker:hover {
     background-color: #138bcf;
     color: #fff;
+    cursor: pointer;
     -webkit-box-shadow: 2px 2px 2px 1px #138bcf;
     -moz-box-shadow: 2px 2px 2px 1px #138bcf;
     box-shadow: 2px 2px 2px 1px #138bcf;
@@ -106,11 +107,20 @@ Styles for Comments Since Last Visit, Reloaded
 
 #cslvr-mark-all-read-button {
     float: right;
-    margin: 24px 0;
 }
 
-#cslvr-buttons.no-new-comments, #cslvr-mark-all-read.no-new-comments {
+#cslvr-buttons.no-new-comments, #cslvr_bottom_buttons.no-new-comments {
     display:none;
+}
+
+#show-hide-cslvr-button-bottom {
+    float: left;
+    margin-bottom: 2em;
+}
+
+#cslvr_bottom_buttons {
+    clear: both;
+    margin-top: 2em;
 }
 
 /******************
@@ -148,14 +158,21 @@ Styles for Comments Since Last Visit: OT DEVELOPMENT BLOG
         box-shadow: 10px 0px 5px -5px rgba(17,123,184,1);
 }
     
-#go-to-next-top-button, #show-hide-cslvr-button, #cslvr-sort-button {
+#go-to-next-top-button, #show-hide-cslvr-button, #cslvr-sort-button, #show-hide-cslvr-button-bottom {
     	background-color: #117bb8;
-	line-height: 150%;
 	max-width: 48%;    
 }
 
-#go-to-next-top-button:hover, #show-hide-cslvr-button:hover, #cslvr-sort-button:hover {
+#go-to-next-top-button:hover, #show-hide-cslvr-button:hover, #cslvr-sort-button:hover, #show-hide-cslvr-button-bottom:hover {
     background-color: #138bcf;   
+}
+
+#cslvr-mark-all-read-button {
+background: none repeat scroll 0 0 #DD5F7F;
+}
+
+#cslvr-mark-all-read-button:hover {
+background: none repeat scroll 0 0 #BC516C;
 }
 
 #cslvr-comments-heading h2 {
@@ -173,7 +190,27 @@ Styles for Comments Since Last Visit: OT DEVELOPMENT BLOG
 
 @media only screen and (max-width: 640px) {
 	.new-comment .gtn_clicker {
-		bottom: -4px;
-   		right: -3px;
+		bottom: -6px;
+   		right: -4px;
+		padding: 8px;
+		background-color: #138bcf;
+		color: #fff;
+		    -webkit-box-shadow: 2px 2px 2px 1px #138bcf;
+		    -moz-box-shadow: 2px 2px 2px 1px #138bcf;
+		    box-shadow: 2px 2px 2px 1px #138bcf;
 	}
+
+	.new-comment .gtn_clicker:hover {
+		background-color:  #117bb8;
+		color: #fff;
+		    -webkit-box-shadow: 2px 2px 2px 1px  #117bb8;
+		    -moz-box-shadow: 2px 2px 2px 1px  #117bb8;
+		    box-shadow: 2px 2px 2px 1px  #117bb8;
+	}
+
+	#go-to-next-top-button, #show-hide-cslvr-button, #cslvr-sort-button,#cslvr-mark-all-read-button,#show-hide-cslvr-button-bottom {
+		height: 60px;
+	}
+
+	
 }*/
