@@ -3,7 +3,7 @@
  * 
  * Author:  CK MacLeod
  * Date:    September 3, 2015
- * Updated: September 9, 2015
+ * Updated: September 11, 2015
  * 
  */
 
@@ -77,8 +77,11 @@ function cslvr_only() {
             var url = jQuery(this).attr('href');
 
             window.open(url);
+            
+        });
+        
+
                         
-        });	
         
     } else {
         
@@ -125,21 +128,16 @@ jQuery(document).ready(function() {
         }).addClass('new-comment-text').fadeIn('slow');   
 
     jQuery('.gtn_clicker').click(function() {
-   
-        var first_target;
        
         var target;
+        var toptarget = jQuery('#comments').offset().top;
        
         //if at first "target" skip to next one on click
 
         jQuery('.new-comment').each(function(i, element) {
             
             if (i === 0) {
-                
-                //get position of first new comment
-               
-                first_target = jQuery(this).offset().top;
-               
+              
                 //go to next instead of merely re-positioning over first
                 
                 return true;
@@ -178,7 +176,7 @@ jQuery(document).ready(function() {
          
             jQuery("html, body").animate({
                 
-                scrollTop: first_target
+                scrollTop: toptarget
                 
             }, 700);
 
@@ -261,7 +259,7 @@ function cslvr_sort() {
         
         //the "appended" class loses functionality even in the re-cloned set, so use
         //new "sorted" class to enable desired click functioning of internal links
-        jQuery('.sorted a').click(function(e) {
+        jQuery('.sorted a').not('.comment-reply-link').click(function(e) {
             
             e.preventDefault();
 

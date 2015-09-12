@@ -8,7 +8,7 @@
  * Author:      CK MacLeod
  * Author URI:  http://www.ckmacleod.com/
  * License:     GPL 2.0
- * Date:        September 10, 2015
+ * Date:        September 11, 2015
  * 
  */
 
@@ -251,7 +251,7 @@ class WP_CSLVR {
                     $xoutput =  '<div id="cslvr-buttons" />';
                     $xoutput .=  '<button type="button" id="show-hide-cslvr-button" onclick="cslvr_only()" class="showhide-button button" title="Show/Hide New Since Last Visit Comments" />Show New Comments Only</button>';
 
-                    $xoutput .=  '<button type="button" id="go-to-next-top-button" onclick="cslvr_next()" class="button" title="Scroll Through New Comments" alt="Go to Next Clicker" />Go to New Comments &#x21C5;</button>';
+                    $xoutput .=  '<button type="button" id="go-to-next-top-button" onclick="cslvr_next()" class="button" title="Scroll Through New Comments" alt="Go to Next Clicker" />Go to New Comments &#x21F5;</button>';
 
                     $xoutput .= '<button type="button" id="cslvr-sort-button" onclick="cslvr_sort()" class="button" title="Sort Chronologically" alt"Sort Chronologically" />Sort Newest First</button>';
 
@@ -381,7 +381,7 @@ class WP_CSLVR {
      */ 
     public function gtn_clicker($content) {
 
-        $gtn_clicker = '<div class="gtn_clicker" title="Scroll Through New Comments" alt="Go to Next Clicker" />&#x21C5;</div>';
+        $gtn_clicker = '<div class="gtn_clicker" title="Scroll Through New Comments" alt="Go to Next Clicker" />&#x21F5;</div>';
 
         return $content.$gtn_clicker;
     }    
