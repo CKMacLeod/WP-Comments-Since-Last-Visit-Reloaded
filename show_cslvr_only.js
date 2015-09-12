@@ -144,12 +144,12 @@ jQuery(document).ready(function() {
                 
            }
            
-        //don't do anything if target isn't distant: note, the number 10 may be
+        //don't do anything if target isn't distant: note, the number 100 may be
         //be adjusted for some contexts   
            
         target = jQuery(element).offset().top;
 
-        if (target - 10 > jQuery(document).scrollTop()) {
+        if (target - 100 > jQuery(document).scrollTop()) {
          
             return false; // break
          
@@ -159,7 +159,7 @@ jQuery(document).ready(function() {
        
      //if there is a worthwhile target, then hit it!
 
-        if (target - 10 > jQuery(document).scrollTop()) {
+        if (target - 100 > jQuery(document).scrollTop()) {
         
             //go to next if available
             
@@ -199,7 +199,7 @@ function cslvr_next() {
            
         target = jQuery(element).offset().top;
 
-        if (target - 10 > jQuery(document).scrollTop()) {
+        if (target - 100 > jQuery(document).scrollTop()) {
 
            return false; // break
 
@@ -207,7 +207,7 @@ function cslvr_next() {
 
    });
 
-    if (target - 10 > jQuery(document).scrollTop()) {
+    if (target - 100 > jQuery(document).scrollTop()) {
 
         jQuery("html, body").animate({
 
